@@ -1,7 +1,7 @@
 # __init__.py
 
 # Expose all day classes here if you want to import them directly
-from .day01 import Day01
+# from .day01 import Day01
 from .day02 import Day02
 # ... import other days as needed
 

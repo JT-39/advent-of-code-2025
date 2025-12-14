@@ -32,7 +32,7 @@ class Day02(BaseDay):
         """Parse input data like '2121212118-2121212124' into integer tuples."""
         ranges = []
         for line in self.data:
-            line = line.strip()
+            line = line.rstrip()
             if line:
                 low, high = map(int, line.split("-"))
                 ranges.append((low, high))
