@@ -23,6 +23,9 @@ class Day03(BaseDay):
 
     def _concat_digits(self, s: str, i: int, j: int) -> int:
         return int(s[i] + s[j])
+    
+    def _pos_small_3_digit(self, s: str) -> list:
+        return sorted(range(len(s)), key=s.__getitem__)[:3]
 
     def solve_part1(self) -> int:
         power_total = 0
@@ -31,6 +34,21 @@ class Day03(BaseDay):
             first = self._pos_first_max_digit(bank)
             second = self._pos_second_max_digit(bank, first)
             power_total += self._concat_digits(bank, first, second)
+
+        return power_total
+    
+    def solve_part2(self):
+        power_total = 0
+
+        for bank in self.data:
+            indices_to_remove = self._pos_small_3_digit(bank)
+            # Remove from string (highest indices first)
+            chars = list(bank)
+            for i in sorted(indices_to_remove, reverse=True):
+                chars.pop(i)
+
+            new_int = int(''.join(chars))
+            power_total += new_int
 
         return power_total
 
