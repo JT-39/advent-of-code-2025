@@ -24,8 +24,18 @@ class Day03(BaseDay):
     def _concat_digits(self, s: str, i: int, j: int) -> int:
         return int(s[i] + s[j])
     
-    def _pos_small_3_digit(self, s: str) -> list:
-        return sorted(range(len(s)), key=s.__getitem__)[:3]
+    def _max_joltage(self, bank: str, num_digits: int = 12) -> int:
+        stack = []
+        n = len(bank)
+        
+        for i, d in enumerate(bank):
+            # While we can remove a digit to make number bigger
+            while stack and d > stack[-1] and len(stack) + (n - i) > num_digits:
+                stack.pop()
+            if len(stack) < num_digits:
+                stack.append(d)
+        
+        return int(''.join(stack))
 
     def solve_part1(self) -> int:
         power_total = 0
@@ -41,14 +51,8 @@ class Day03(BaseDay):
         power_total = 0
 
         for bank in self.data:
-            indices_to_remove = self._pos_small_3_digit(bank)
-            # Remove from string (highest indices first)
-            chars = list(bank)
-            for i in sorted(indices_to_remove, reverse=True):
-                chars.pop(i)
-
-            new_int = int(''.join(chars))
-            power_total += new_int
+            largest_int = self._max_joltage(bank)
+            power_total += largest_int
 
         return power_total
 
